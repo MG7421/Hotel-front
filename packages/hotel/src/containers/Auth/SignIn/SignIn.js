@@ -23,8 +23,8 @@ const SignIn = () => {
           src="/images/logo-alt.svg"
           title="TripFinder."
         />
-        <Title>Welcome Back</Title>
-        <TitleInfo>Please log into your account</TitleInfo>
+        <Title>Bienvenue</Title>
+        <TitleInfo>Entrez vos identifiants</TitleInfo>
         <SignInForm />
         <Divider>Or log in with </Divider>
         <SocialLogin />

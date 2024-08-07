@@ -24,7 +24,7 @@ const Pricing = () => {
   return (
     <PricingWrapper>
       <PricingHeader>
-        <Title>Select Your Pricing Plan</Title>
+        <Title>Select Your Pricing Plassbhjn</Title>
         <Description>
           Simple Transparent pricing for everyone, whether you are local hotel
           owner or an agent.

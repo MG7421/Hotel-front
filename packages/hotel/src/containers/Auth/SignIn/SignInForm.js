@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate , useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { MdLockOpen } from 'react-icons/md';
 import { Input, Switch, Button } from 'antd';
@@ -7,50 +7,79 @@ import FormControl from 'components/UI/FormControl/FormControl';
 import { AuthContext } from 'context/AuthProvider';
 import { FORGET_PASSWORD_PAGE } from 'settings/constant';
 import { FieldWrapper, SwitchWrapper, Label } from '../Auth.style';
+import axios from 'axios';
+
+
+
 
 export default function SignInForm() {
+ 
+
   const { signIn, loggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const onSubmit = (data) => {
-    signIn(data);
+
+  const onSubmit = async (data,history) => { 
+    // signIn(data);
+    try {
+      const response = await axios.post('https://groupe-residence-production-residences-managements.k8s.dev02.ovh.smile.ci/residence/users/login', {
+        user: "1",
+        datas: [
+          {
+            login: data.login,
+            password: data.password
+          }
+        ]
+      });
+  
+      if (response.data && response.data.success) {
+        signIn(response.data.token);
+        navigate('/lien/bon');
+      } else {
+        console.error('Erreur de connexion:', response.data.message);
+        navigate('/lien/mauvais');
+      }
+  
+    } catch (error) {
+      
+      console.error('Une erreur s\'est produite lors de la tentative de connexion : ', error);
+    }
+    
   };
   if (loggedIn) {
-    return <Navigate to="/" replace={true} />;
+    return <Navigate to="/lien/bon" replace={true} />;
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl
-        label="Email"
-        htmlFor="email"
+    // <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit((data) => onSubmit(data))}>
+
+    <FormControl
+        label="Login"
+        htmlFor="login"
         error={
-          errors.email && (
+          errors.login && (
             <>
-              {errors.email?.type === 'required' && (
+              {errors.login?.type === 'required' && (
                 <span>This field is required!</span>
               )}
-              {errors.email?.type === 'pattern' && (
-                <span>Please enter a valid email address!</span>
-              )}
+              
             </>
           )
         }
       >
         <Controller
-          name="email"
+          name="login"
           defaultValue=""
           control={control}
-          rules={{
-            required: true,
-            pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-          }}
           render={({ field: { onChange, onBlur, value } }) => (
             <Input
-              type="email"
+              type="login"
               onChange={onChange}
               onBlur={onBlur}
               value={value}

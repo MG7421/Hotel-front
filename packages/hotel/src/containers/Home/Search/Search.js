@@ -35,11 +35,11 @@ const SearchArea = ({ searchTitleStyle, searchDescriptionStyle }) => {
         <SearchWrapper>
           <Heading
             {...searchTitleStyle}
-            content="Latest reviews. Lowest prices."
+            content="Test reviews. Lowest prices."
           />
           <Text
             {...searchDescriptionStyle}
-            content="compares prices from 200+ booking sites to help you find the lowest
+            content="compares prices from 200dhb+ booking sites to help you find the lowest
           price on the right hotel for you."
           />
           <SearchForm />

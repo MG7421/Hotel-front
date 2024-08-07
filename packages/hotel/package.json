@@ -53,5 +53,8 @@
     "lerna": "^6.0.3",
     "prettier": "^2.7.1",
     "serve": "^14.1.2"
-  }
+  },
+  "proxy": "https://groupe-residence-production-residences-managements.k8s.dev02.ovh.smile.ci"
+
+
 }
